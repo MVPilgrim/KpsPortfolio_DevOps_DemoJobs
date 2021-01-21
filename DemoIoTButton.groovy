@@ -49,7 +49,12 @@ def sendEmailStage() {
   stage("$stageName") {
     DisplayStageBanner("$stageName");
 	sh """
-	  echo '###### Remember to add Email notification.'
+	  sendmail -f mv.pilgrim.aws@gmail.com mv.pilgrim@hey.com << EOD
+From: kps <mv.pilgrim.aws@gmail.com>
+Subject: From DemoIotButton
+Button Hello World!
+.
+EOD
 	"""
   }
 }
