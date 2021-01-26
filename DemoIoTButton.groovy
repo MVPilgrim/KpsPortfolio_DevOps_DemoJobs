@@ -7,6 +7,8 @@
 /*
 /* Change Log:
 /*   * KPS 10-17-2020: Initial version.
+/*   * KPS 01-25-2021: Modified to be invoked by actual
+/*     AWS IoT button.
 /**********************************************************/
 
 
@@ -57,11 +59,11 @@ def sendHelloEmailStage(deviceId,clickType) {
   stageName = "Send Hello Email"
   stage("$stageName") {
   DisplayStageBanner("$stageName");
-	subject = "DemoIoTButton + deviceId + ": " + clickType + "Hello World!";
+  subject = "DemoIoTButton " + deviceId + ": " + clickType + " Hello World!";
   if (clickType != "LONG") {
-    body = "IoT button " + deviceId + " sent a + clickType + " click.";
+    body = "IoT button " + deviceId + " sent a " + clickType + " click.";
   } else {
-    body = "IoT button " + deviceId + " sent a + clickType + " press.";
+    body = "IoT button " + deviceId + " sent a " + clickType + " press.";
   }
   sendEmail(subject,body); 
 }
