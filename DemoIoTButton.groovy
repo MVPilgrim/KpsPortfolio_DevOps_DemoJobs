@@ -53,12 +53,16 @@ def initStage() {
 /*
  * Send E-mail back to initiator.
 */
-def sendHelloEmailStage(clickType) {
+def sendHelloEmailStage(deviceId,clickType) {
   stageName = "Send Hello Email"
   stage("$stageName") {
   DisplayStageBanner("$stageName");
-	subject = "DemoIoTButton: error: " + emsg;
-  body = "Exception caught: err: " + emsg;
+	subject = "DemoIoTButton + deviceId + ": " + clickType + "Hello World!";
+  if (clickType != "LONG") {
+    body = "IoT button " + deviceId + " sent a + clickType + " click.";
+  } else {
+    body = "IoT button " + deviceId + " sent a + clickType + " press.";
+  }
   sendEmail(subject,body); 
 }
 
