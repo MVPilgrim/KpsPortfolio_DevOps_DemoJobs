@@ -20,9 +20,18 @@ node('Generic') {
   try {
     jobName = JOB_BASE_NAME;
     initStage();
-    sendEmailStage();
+    if (params.clickType == "SINGLE"
+	|| params.clickType == "DOUBLE"
+	|| params.clickType == "LONG"
+       ) {
+    
+    }
+    sendEmailStage(clickType);
   } catch (Exception e) {
-    echo "Exception caught: " + e.getMessage();
+    emsg = e.getMessage();
+    subject = "DemoIoTButton: error: " + emsg;
+    body = "Exception caught: err: " + emsg;
+    sendEmail(subject,body);
   }
 }
 
@@ -44,17 +53,21 @@ def initStage() {
 /*
  * Send E-mail back to initiator.
 */
-def sendEmailStage() {
-  stageName = "Send Email"
+def sendHelloEmailStage(clickType) {
+  stageName = "Send Hello Email"
   stage("$stageName") {
-    DisplayStageBanner("$stageName");
-	sh """
-	  sendmail -f mv.pilgrim.aws@gmail.com mv.pilgrim@hey.com << EOD
+  DisplayStageBanner("$stageName");
+	subject = "DemoIoTButton: error: " + emsg;
+  body = "Exception caught: err: " + emsg;
+  sendEmail(subject,body); 
+}
+
+def sendEmail(subject,body) {
+ sh """
+    sendmail -f mv.pilgrim.aws@gmail.com mv.pilgrim@hey.com << EOD
 From: kps <mv.pilgrim.aws@gmail.com>
-Subject: From DemoIotButton
-Button Hello World!
+Subject: $subject
+$body
 .
 EOD
-	"""
-  }
 }
