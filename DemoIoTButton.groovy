@@ -20,7 +20,7 @@ node('Generic') {
   try {
     jobName = JOB_BASE_NAME;
     initStage();
-	sendEmailStage();
+    sendEmailStage();
   } catch (Exception e) {
     echo "Exception caught: " + e.getMessage();
   }
@@ -36,7 +36,7 @@ def initStage() {
     DisplayStageBanner(stageName);
     sh "whoami";
     env.PATH="$env.PATH:/opt/node-v12.19.0-linux-x64/bin";
-	ngnxDir="/usr/share/nginx";
+    ngnxDir="/usr/share/nginx";
   }
 }
 
