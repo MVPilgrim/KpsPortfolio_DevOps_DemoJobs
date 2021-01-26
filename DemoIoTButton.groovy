@@ -26,12 +26,15 @@ node('Generic') {
 	|| params.clickType == "DOUBLE"
 	|| params.clickType == "LONG"
        ) {
-    
+      sendHelloEmailStage(deviceId,clickType);
+    } else {
+      subject = "DemoIoTButton error: Invalid clickType: " + clickType;
+      body = subject;
+      sendEmail(subject,body);
     }
-    sendEmailStage(clickType);
   } catch (Exception e) {
     emsg = e.getMessage();
-    subject = "DemoIoTButton: error: " + emsg;
+    subject = "DemoIoTButton error: " + emsg;
     body = "Exception caught: err: " + emsg;
     sendEmail(subject,body);
   }
@@ -51,29 +54,31 @@ def initStage() {
   }
 }
 
-
 /*
  * Send E-mail back to initiator.
 */
 def sendHelloEmailStage(deviceId,clickType) {
   stageName = "Send Hello Email"
   stage("$stageName") {
-  DisplayStageBanner("$stageName");
-  subject = "DemoIoTButton " + deviceId + ": " + clickType + " Hello World!";
-  if (clickType != "LONG") {
-    body = "IoT button " + deviceId + " sent a " + clickType + " click.";
-  } else {
-    body = "IoT button " + deviceId + " sent a " + clickType + " press.";
+      DisplayStageBanner("$stageName");
+      subject = "DemoIoTButton " + deviceId + ": " + clickType + " Hello World!";
+      if (clickType != "LONG") {
+          body = "IoT button " + deviceId + " sent a " + clickType + " click.";
+      } else {
+        body = "IoT button " + deviceId + " sent a " + clickType + " press.";
+      }
+      sendEmail(subject,body);
   }
-  sendEmail(subject,body); 
 }
 
 def sendEmail(subject,body) {
- sh """
+  sh """
     sendmail -f mv.pilgrim.aws@gmail.com mv.pilgrim@hey.com << EOD
-From: kps <mv.pilgrim.aws@gmail.com>
+From: kps <mv.pilgrim.aws@gmail.com
 Subject: $subject
 $body
 .
 EOD
+  """
+    
 }
