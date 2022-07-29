@@ -73,7 +73,7 @@ def sendHelloEmailStage(deviceId,clickType) {
 
 def sendEmail(subject,body) {
   sh """
-      echo "Subject: $subject" | /sbin/sendmail -f mv.pilgrim.aws@gmail.com mv.pilgrim@hey.com
+      echo "Subject: $subject" | /sbin/sendmail -f mv.pilgrim.aws@gmail.com mv.pilgrim@gmail.com.com
   """
     
 }
